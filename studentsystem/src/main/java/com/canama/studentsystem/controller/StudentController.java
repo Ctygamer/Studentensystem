@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.canama.studentsystem.model.Course;
-import com.canama.studentsystem.model.Student;
+import com.canama.studentsystem.Entity.Course;
+import com.canama.studentsystem.Entity.Student;
 import com.canama.studentsystem.repository.CourseRepository;
 import com.canama.studentsystem.service.StudentServiceImpl;
 
@@ -24,20 +25,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
-//Das ist ein RestController, der die Anfragen von der Frontendseite entgegennimmt und die Daten an die Service-Klasse weiterleitet.
+/**
+ * Der `StudentController` ist ein REST-Controller, der HTTP-Anfragen von der Frontendseite
+ * entgegennimmt und diese an die entsprechende Service-Klasse weiterleitet.
+ * <p>
+ * Die Annotationen `@RestController` und `@RequestMapping` dienen der Konfiguration des Controllers
+ * sowie der Definition des Zugriffspfads. Anfragen können von einer anderen Domain zugelassen werden,
+ * dank der `@CrossOrigin`-Annotation, die CORS (Cross-Origin Resource Sharing) erlaubt.
+ * </p>
+ */
 @RestController
 @RequestMapping("/student") //Der Pfad, der in der URL eingegeben wird, um auf die Methoden in diesem Controller zuzugreifen.
-@CrossOrigin(origins = "http://localhost:3000")//Diese Annotation ermöglicht den Zugriff auf die Methoden in diesem Controller von einer anderen Domain.
+@RequiredArgsConstructor // Automatischer Konstrucktor für finale Felder
 public class StudentController {
-    //Autowired ist eine Annotation, die Spring sagt, dass es die Instanzierung übernehmen soll
-    @Autowired
-    private StudentServiceImpl studentService; //Die Service-Klasse, die die Datenbankzugriffe durchführt.
+    /**
+     * Service-Klasse für die Geschäftslogik und Datenbankzugriffe bezüglich Studenten.
+     * Spring übernimmt automatisch die Instanziierung durch `@Autowired`.
+     */
+    private final StudentServiceImpl studentService; // finaler Feld für die Service-Komponente
 
-    @Autowired  // ✅ Hier die fehlende Injektion für das Repository hinzufügen
-    private CourseRepository courseRepository;  // 🔥 Kurs-Repository definieren
-    //Diese Methode nimmt die Anfragen von der Frontendseite entgegen und leitet die Daten an die Service-Klasse weiter.
-    //Die Service-Klasse führt die Datenbankzugriffe durch.
+
+    /**
+     * Repository für den Zugriff auf Kursdaten.
+     */
+    private final CourseRepository courseRepository; // final Feld für das Repository
+
+
+    /**
+     * Fügt einen neuen Studenten in das System ein.
+     *
+     * @param student Der Student, der hinzugefügt werden soll.
+     * @return Eine `ResponseEntity`, die den Status der Anfrage enthält.
+     */
     @PostMapping("add")
     public ResponseEntity<?> add(@RequestBody Student student) {
         try {
@@ -55,20 +74,36 @@ public class StudentController {
         }
     }
 
-    
-    //Diese Methode nimmt die Anfragen von der Frontendseite entgegen und leitet die Daten an die Service-Klasse weiter.
-    @GetMapping("getall")
+    /**
+     * Gibt die Liste aller Studenten zurück.
+     *
+     * @return Eine Liste aller `Student`-Objekte.
+     */
+    @GetMapping
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-     // ✅ Student per ID löschen
+    /**
+     * Löscht einen Studenten anhand seiner ID.
+     *
+     * @param id Die ID des zu löschenden Studenten.
+     * @return Eine Nachricht, die den Erfolg oder Misserfolg des Löschvorgangs anzeigt.
+     */
     @DeleteMapping("delete/{id}")
     public String deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudentById(id);
         return "Student deleted successfully";
     }
-    // ✅ Student per ID suchen und zurückgeben 
+
+    /**
+     * Aktualisiert die Kurse eines Studenten anhand seiner ID.
+     *
+     * @param id Die ID des Studenten, dessen Kurse aktualisiert werden sollen.
+     * @param coursesData Eine Liste von Maps, die die neuen Kursinformationen enthalten.
+     *                    Jede Map sollte die Kurs-ID enthalten.
+     * @return Eine `ResponseEntity` mit einer Map, die den Status der Aktualisierung angibt.
+     */
     @PutMapping("/{id}/update-courses")
     public ResponseEntity<Map<String, String>> updateStudentCourses(@PathVariable Integer id,
         @RequestBody List<Map<String, Integer>> coursesData) {
@@ -81,7 +116,7 @@ public class StudentController {
                              .orElseThrow(() -> new RuntimeException("Course not found: " + courseId));
               })
               .collect(Collectors.toList());
-      
+
           student.setCourses(realCourses);
           studentService.saveStudent(student);
           return ResponseEntity.ok(Map.of("message", "Student courses updated successfully"));

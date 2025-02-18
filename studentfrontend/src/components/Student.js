@@ -38,7 +38,7 @@ export default function Student() {
 
   // ✅ Studenten abrufen
   const fetchStudents = () => {
-    fetch("http://localhost:8080/student/getall")
+    fetch("http://localhost:8080/student")
       .then((response) => response.json())
       .then((result) => {
         setStudents(result);
@@ -47,7 +47,7 @@ export default function Student() {
 
   useEffect(() => {
     fetchStudents();
-    fetch("http://localhost:8080/course/getall")
+    fetch("http://localhost:8080/course")
       .then((response) => response.json())
       .then((result) => setCourses(result));
   }, []);
@@ -266,8 +266,8 @@ export default function Student() {
       </Stack>
 
       <Stack direction="row" justifyContent="center" sx={{ marginTop: 3 }}>
-        <Button variant="contained" color="primary" component={Link} to="/chat">
-          Chatroom
+        <Button variant="contained" color="secondary" component={Link} to="/chat">
+          Chat
         </Button>
       </Stack>
 

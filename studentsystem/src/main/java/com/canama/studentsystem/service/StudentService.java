@@ -2,7 +2,7 @@ package com.canama.studentsystem.service;
 
 import java.util.List;
 
-import com.canama.studentsystem.model.Student;
+import com.canama.studentsystem.Entity.Student;
 
 // Interface for StudentService 
 public interface StudentService {
