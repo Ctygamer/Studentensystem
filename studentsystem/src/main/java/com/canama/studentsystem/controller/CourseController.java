@@ -5,7 +5,6 @@ import com.canama.studentsystem.Entity.Student;
 import com.canama.studentsystem.repository.CourseRepository;
 import com.canama.studentsystem.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,6 +97,7 @@ public class CourseController {
      * @param studentId Die ID des Studenten, der hinzugefügt werden soll.
      * @return Eine Nachricht, ob der Student erfolgreich hinzugefügt wurde oder bereits Teil des Kurses ist.
      */
+    //POSTMapping
     @PutMapping("/{courseId}/add-student/{studentId}")
     public String addStudentToCourse(@PathVariable Integer courseId, @PathVariable Integer studentId) {
         Course course = courseRepository.findById(courseId)
