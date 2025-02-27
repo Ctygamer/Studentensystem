@@ -1,3 +1,4 @@
+// JavaScript - studentfrontend/src/components/Student.js
 import * as React from "react";
 import {
   Box,
@@ -25,7 +26,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
 export default function Student() {
   const paperStyle = { padding: "50px 20px", width: "80%", margin: "20px auto" };
   const [name, setName] = useState("");
@@ -36,7 +36,7 @@ export default function Student() {
   const [newCourseId, setNewCourseId] = useState("");
   const [error, setError] = useState("");
 
-  // ✅ Studenten abrufen
+  // Fetch students function
   const fetchStudents = () => {
     fetch("http://localhost:8080/student")
       .then((response) => response.json())
@@ -45,24 +45,35 @@ export default function Student() {
       });
   };
 
+  // Fetch courses only on mount
   useEffect(() => {
-    fetchStudents();
     fetch("http://localhost:8080/course")
       .then((response) => response.json())
-      .then((result) => setCourses(result));
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setCourses(data);
+          data.forEach((course) => console.log(course.name));
+        } else {
+          console.error("Expected an array but received:", data);
+        }
+      })
+      .catch((error) => console.error("Error fetching courses:", error));
   }, []);
 
-  // ✅ Neuen Studenten hinzufügen + Kurse direkt verknüpfen
+  // Fetch students on mount as well
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  // Add new student with course assignment
   const handleClick = (e) => {
     e.preventDefault();
 
-    // Überprüfen, ob Name und Adresse ausgefüllt sind
     if (!name || !address) {
       setError("Name und Adresse dürfen nicht leer sein.");
       return;
     }
 
-    // Überprüfen, ob mindestens ein Kurs ausgewählt wurde
     if (selectedCourses.length === 0) {
       setError("Es muss mindestens ein Kurs hinzugefügt werden.");
       return;
@@ -82,12 +93,11 @@ export default function Student() {
       console.log("Neuer Student hinzugefügt");
       setName("");
       setAddress("");
-      setSelectedCourses([]);
       fetchStudents();
     });
   };
 
-  // ✅ Studenten löschen
+  // Delete student
   const handleDelete = (studentId) => {
     fetch(`http://localhost:8080/student/delete/${studentId}`, {
       method: "DELETE"
@@ -97,21 +107,19 @@ export default function Student() {
     });
   };
 
-  // Kurs löschen
+  // Delete course from student and update backend
   const handleDeleteCourse = (studentId, courseId) => {
     const student = students.find((s) => s.id === studentId);
-    const newSelectedCourses = student.courses.filter((course) => course.id !== courseId).map((course) => course.id);
+    const newSelectedCourses = student.courses
+      .filter((course) => course.id !== courseId)
+      .map((course) => course.id);
     setSelectedCourses(newSelectedCourses);
-
-    // Jetzt aktualisiere den Studenten im Backend
     handleUpdateStudentCourse(studentId, newSelectedCourses);
   };
 
-  // Kurs hinzufügen
+  // Add course to student and update backend
   const handleAddCourse = (studentId) => {
     if (!newCourseId) return;
-
-    // Überprüfen, ob der Kurs bereits in der Liste der ausgewählten Kurse vorhanden ist
     if (selectedCourses.includes(newCourseId)) {
       setError("Kurs ist bereits hinzugefügt.");
       return;
@@ -119,16 +127,14 @@ export default function Student() {
 
     const newSelectedCourses = [...selectedCourses, newCourseId];
     setSelectedCourses(newSelectedCourses);
-
-    // Jetzt aktualisiere den Studenten im Backend
     handleUpdateStudentCourse(studentId, newSelectedCourses);
   };
 
-  // ✅ Studenten-Kurszuweisung aktualisieren
+ // Update student courses backend call
   const handleUpdateStudentCourse = (studentId, newSelectedCourses) => {
-    // Umwandeln der IDs (als String oder Zahl) in ein Array von Objekten, das die erwartete Struktur hat
-    const coursesPayload = newSelectedCourses.map(courseId => ({ id: parseInt(courseId) }));
-    
+    // Convert course IDs into an array of integers
+    const coursesPayload = newSelectedCourses.map(courseId => parseInt(courseId, 10));
+
     fetch(`http://localhost:8080/student/${studentId}/update-courses`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -141,17 +147,17 @@ export default function Student() {
         return response.json();
       })
       .then(() => {
-        console.log(`Student ${studentId} Kurse aktualisiert`);
+        console.log(`Student ${studentId} courses updated`);
         fetchStudents();
       })
       .catch(error => {
-        console.error("Fehler beim Aktualisieren der Kurse:", error);
+        console.error("Error updating courses:", error);
       });
   };
 
   return (
     <Container>
-      {/* Student hinzufügen */}
+      {/* Student add form */}
       <Paper elevation={4} style={paperStyle}>
         <Typography variant="h4" color="primary" align="center">
           Student Formular
@@ -159,8 +165,6 @@ export default function Student() {
         <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2 }} noValidate autoComplete="off">
           <TextField label="Student Name" variant="outlined" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
           <TextField label="Student Address" variant="outlined" fullWidth value={address} onChange={(e) => setAddress(e.target.value)} />
-
-          {/* Kursauswahl */}
           <FormControl fullWidth>
             <InputLabel>Kurse auswählen</InputLabel>
             <Select multiple value={selectedCourses} onChange={(e) => setSelectedCourses(e.target.value)}>
@@ -171,14 +175,13 @@ export default function Student() {
               ))}
             </Select>
           </FormControl>
-
           <Button variant="contained" color="success" onClick={handleClick} size="large">
             Student hinzufügen
           </Button>
         </Box>
       </Paper>
 
-      {/* Studentenliste als Tabelle */}
+      {/* Student list table */}
       <Typography variant="h4" color="primary" align="center" sx={{ marginTop: 3 }}>
         Studenten
       </Typography>
@@ -203,10 +206,7 @@ export default function Student() {
                   {student.courses && student.courses.length > 0 ? (
                     student.courses.map((course) => (
                       <div key={course.id} style={{ marginBottom: "10px" }}>
-                        <IconButton
-                          color="error"
-                          onClick={() => handleDeleteCourse(student.id, course.id)}
-                        >
+                        <IconButton color="error" onClick={() => handleDeleteCourse(student.id, course.id)}>
                           <DeleteIcon />
                         </IconButton>
                         <span>{course.name}</span>
@@ -215,36 +215,36 @@ export default function Student() {
                   ) : (
                     "Keine"
                   )}
-                  {/* Dropdown-Menü um neuen Kurs hinzuzufügen */}
-                    {/* Flex-Container für Dropdown und Button */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <FormControl fullWidth sx={{ maxWidth: 200, minWidth: 100, height: '40px' }}>
-                    <InputLabel shrink style={{color: 'black', backgroundColor: 'white', px:3, }}>Kurs hinzufügen</InputLabel>
-                    <Select
-                      value={newCourseId}
-                      onChange={(e) => setNewCourseId(e.target.value)}
-                      displayEmpty // Damit das Label auch ohne Auswahl korrekt funktioniert
-                      sx={{
-                        height: '40px', // Höhe anpassen
-                        padding: '5px 10px',
-                        fontSize: '14px',
-                        display: 'flex',
-                        alignItems: 'center'
-                      }}
-                    >
-                      <MenuItem value="" disabled>
-                        Bitte wählen...
-                      </MenuItem>
-                      {courses.map((course) => (
-                        <MenuItem key={course.id} value={course.id}>
-                          {course.name}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <FormControl fullWidth sx={{ maxWidth: 200, minWidth: 100, height: "40px" }}>
+                      <InputLabel shrink style={{ color: "black", backgroundColor: "white", paddingBlock: 3 }}>
+                        Kurs hinzufügen
+                      </InputLabel>
+                      <Select
+                        value={newCourseId}
+                        onChange={(e) => setNewCourseId(e.target.value)}
+                        displayEmpty
+                        sx={{
+                          height: "40px",
+                          padding: "5px 10px",
+                          fontSize: "14px",
+                          display: "flex",
+                          alignItems: "center"
+                        }}
+                      >
+                        <MenuItem value="" disabled>
+                          Bitte wählen...
                         </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <Button variant="contained" color="primary" sx={{ fontSize: '16px', height: '30px', width: '35px', minWidth: 0, padding: 0 }} onClick={() => handleAddCourse(student.id)}>
-                    +
-                  </Button>
+                        {courses.map((course) => (
+                          <MenuItem key={course.id} value={course.id}>
+                            {course.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Button variant="contained" color="primary" sx={{ fontSize: "16px", height: "30px", width: "35px", minWidth: 0, padding: 0 }} onClick={() => handleAddCourse(student.id)}>
+                      +
+                    </Button>
                   </Box>
                 </TableCell>
                 <TableCell>
@@ -258,7 +258,6 @@ export default function Student() {
         </Table>
       </TableContainer>
 
-      {/* Link zur Kursseite */}
       <Stack direction="row" justifyContent="center" sx={{ marginTop: 3 }}>
         <Button variant="contained" color="primary" component={Link} to="/courses">
           Kurse anzeigen
@@ -271,9 +270,8 @@ export default function Student() {
         </Button>
       </Stack>
 
-      {/* Snackbar für Fehlermeldungen */}
       <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError("")}>
-        <Alert onClose={() => setError("")} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={() => setError("")} severity="error" sx={{ width: "100%" }}>
           {error}
         </Alert>
       </Snackbar>

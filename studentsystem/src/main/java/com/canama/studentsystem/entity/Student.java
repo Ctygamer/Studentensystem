@@ -1,5 +1,6 @@
-package com.canama.studentsystem.Entity;
+package com.canama.studentsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +28,7 @@ public class Student {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     /**
      * Der Name des Studenten.
@@ -56,6 +57,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"), // Verweist auf die Student-Id-Spalte
             inverseJoinColumns = @JoinColumn(name = "course_id") // Verweist auf die Course-Id-Spalte
     )
+    @JsonManagedReference
     @Builder.Default // Initialisiert standardmäßig eine leere Liste
     private List<Course> courses = new ArrayList<>();
 }

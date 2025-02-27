@@ -220,7 +220,7 @@ export default function Course() {
         {/* Link zur Kursseite */}
         <Stack direction="row" justifyContent="center" sx={{ marginTop: 3 }}>
           <Button variant="contained" color="primary" component={Link} to="/">
-            Kurse anzeigen
+            Zurück zu Studenten
           </Button>
         </Stack>
 
