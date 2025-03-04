@@ -1,4 +1,4 @@
-package com.canama.studentsystem.service.impl;
+package com.canama.studentsystem.service;
 
 import com.canama.studentsystem.DTO.StudentDto;
 import com.canama.studentsystem.entity.Course;
@@ -6,7 +6,6 @@ import com.canama.studentsystem.entity.Student;
 import com.canama.studentsystem.mapper.StudentMapper;
 import com.canama.studentsystem.repository.CourseRepository;
 import com.canama.studentsystem.repository.StudentRepository;
-import com.canama.studentsystem.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
