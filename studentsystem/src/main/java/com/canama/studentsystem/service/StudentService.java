@@ -27,14 +27,6 @@ public interface StudentService {
     public List<StudentDto> getAllStudents();
 
     /**
-     * Ruft einen Studenten anhand der eindeutigen ID ab.
-     *
-     * @param id die eindeutige ID des Studenten
-     * @return das zugehörige StudentDto-Objekt
-     */
-    public StudentDto getStudentById(Integer id);
-
-    /**
      * Löscht einen Studenten anhand der eindeutigen ID.
      *
      * @param id die eindeutige ID des Studenten

@@ -85,7 +85,7 @@ export default function Student() {
       courses: selectedCourses.map((id) => ({ id: parseInt(id) }))
     };
 
-    fetch("http://localhost:8080/student/add", {
+    fetch("http://localhost:8080/student", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(student)
@@ -99,7 +99,7 @@ export default function Student() {
 
   // Delete student
   const handleDelete = (studentId) => {
-    fetch(`http://localhost:8080/student/delete/${studentId}`, {
+    fetch(`http://localhost:8080/student/${studentId}`, {
       method: "DELETE"
     }).then(() => {
       console.log(`Student ${studentId} gelöscht`);

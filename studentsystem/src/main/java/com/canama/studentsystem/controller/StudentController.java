@@ -31,7 +31,7 @@ package com.canama.studentsystem.controller;
          * @param bindingResult enthält Validierungsfehler, falls vorhanden
          * @return den hinzugefügten Studenten oder eine Fehlermeldung
          */
-        @PostMapping("/add")
+        @PostMapping
         public ResponseEntity<?> add(@Valid @RequestBody StudentDto studentDto, BindingResult bindingResult) {
             if (bindingResult.hasErrors()) {
                 List<String> errors = bindingResult.getFieldErrors().stream()
@@ -65,7 +65,7 @@ package com.canama.studentsystem.controller;
          * @param id die ID des zu löschenden Studenten
          * @return eine Antwort, die das Ergebnis der Löschung angibt
          */
-        @DeleteMapping("/delete/{id}")
+        @DeleteMapping("/{id}")
         public ResponseEntity<String> deleteStudent(@PathVariable Integer id) {
             try {
                 studentService.deleteStudentById(id);

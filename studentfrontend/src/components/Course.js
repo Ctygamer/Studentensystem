@@ -49,7 +49,7 @@ export default function Course() {
 
     const course = { name, description };
 
-    fetch("http://localhost:8080/course/add", {
+    fetch("http://localhost:8080/course", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(course),
@@ -71,7 +71,7 @@ export default function Course() {
   };
 
   const handleDelete = (courseId) => {
-    fetch(`http://localhost:8080/course/delete/${courseId}`, {
+    fetch(`http://localhost:8080/course/${courseId}`, {
       method: "DELETE",
     })
         .then((response) =>

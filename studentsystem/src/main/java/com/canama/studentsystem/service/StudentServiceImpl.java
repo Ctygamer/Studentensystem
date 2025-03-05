@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         // Kurse anhand der IDs laden und setzen
         List<Course> courses = studentDto.courses().stream()
                 .map(courseDto -> courseRepository.findById(courseDto.id())
-                        .orElseThrow(() -> new RuntimeException("Course not found: " + courseDto.id())))
+                        .orElseThrow(() -> new RuntimeException("Kurs wurde nicht Gefunden " + courseDto.id())))
                 .collect(Collectors.toList());
 
         student.setCourses(courses);
@@ -67,14 +67,6 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public StudentDto getStudentById(Integer id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
-        return studentMapper.toDto(student);
-    }
-
     /**
      * Löscht einen Studenten aus der Datenbank anhand seiner ID. Vor dem Löschen
      * werden die Beziehungen zu seinen Kursen entfernt.
@@ -86,7 +78,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void deleteStudentById(Integer id) {
         if (!studentRepository.existsById(id)) {
-            throw new RuntimeException("Student not found with id: " + id);
+            throw new RuntimeException("Student mit der Id: " + id + " nicht gefunden");
         }
         studentRepository.deleteById(id);
     }
@@ -102,11 +94,11 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public StudentDto updateStudentCourses(Integer id, List<Integer> courseIds) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Student mit der Id: " + id + " nicht gefunden"));
 
         List<Course> courses = courseIds.stream()
                 .map(courseId -> courseRepository.findById(courseId)
-                        .orElseThrow(() -> new RuntimeException("Course not found: " + courseId)))
+                        .orElseThrow(() -> new RuntimeException("Kurs nicht Gefunden " + courseId)))
                 .collect(Collectors.toList());
 
         student.setCourses(courses);
