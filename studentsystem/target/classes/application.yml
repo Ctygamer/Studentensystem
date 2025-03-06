@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-cv1bpftds78s73dmomk0-a.frankfurt-postgres.render.com:5432/geraete
+    username: m347
+    password: TsFHAbD0H0O8NUbVqTik7q5CnQhVTCAe
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
