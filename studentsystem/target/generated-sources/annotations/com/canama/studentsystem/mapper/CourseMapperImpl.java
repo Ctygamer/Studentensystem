@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-06T21:35:46+0100",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.41.0.z20250213-2037, environment: Java 21.0.6 (Eclipse Adoptium)"
+    date = "2025-03-06T21:38:30+0100",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
 public class CourseMapperImpl implements CourseMapper {
@@ -40,9 +40,9 @@ public class CourseMapperImpl implements CourseMapper {
 
         Course.CourseBuilder course = Course.builder();
 
-        course.description( courseDto.description() );
         course.id( courseDto.id() );
         course.name( courseDto.name() );
+        course.description( courseDto.description() );
 
         return course.build();
     }
