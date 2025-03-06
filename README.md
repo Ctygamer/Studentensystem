@@ -76,7 +76,6 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
     npm i
     ```
 
-
 10. Starte die Applikation:
     ```bash
     npm run
