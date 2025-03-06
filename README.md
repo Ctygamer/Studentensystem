@@ -7,3 +7,5 @@ Für die Speicherung von Daten wird eine externe Postgres Datenbank verwendet, d
 - **database:** geraete
 - **user:** m347
 - **password:** TsFHAbD0H0O8NUbVqTik7q5CnQhVTCAe
+
+Externe URL: postgresql://m347:TsFHAbD0H0O8NUbVqTik7q5CnQhVTCAe@dpg-cv1bpftds78s73dmomk0-a.frankfurt-postgres.render.com/geraete
