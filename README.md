@@ -29,16 +29,63 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
 
 1.  Repository klonen:
     ```bash
-    git clone <repository-url>
+    git clone <https://github.com/Ctygamer/Studentensystem.git>
     ```
-2.  Zum Projektverzeichnis navigieren:
+2. **Projekt bauen**  
+   Zuerst müssen Sie das Projekt bauen, um den `target`-Ordner zu erstellen und die JAR-Datei zu generieren:
+   ```bash
+   ./mvnw clean package -DskipTest
+   ```
+   Dieser Befehl reinigt vorherige Builds und erstellt eine neue JAR-Datei im `target`-Verzeichnis.
+
+3. **JAR-Datei überprüfen**  
+   Stellen Sie sicher, dass die Datei `Lernen-0.0.1-SNAPSHOT.jar` im `target`-Ordner vorhanden ist. Diese Datei wird im **Dockerfile** verwendet, um das Docker-Image zu erstellen.
+
+4. **Docker-Container starten**  
+    Starten Sie die Docker-Container mit **Docker Compose**:
+   ```bash
+   docker-compose up --build
+   ```     
+
+5.  Zum Projektverzeichnis Backend navigieren:
     ```bash
-    cd <project-directory>
+    cd <studentsystem>
     ```
-3.  Anwendung mit Docker Compose starten:
+    
+6. Installieren der Abhängigkeiten:
     ```bash
-    docker-compose up --build
+    npm i
     ```
+7.  Zum Projektverzeichnis Frontend navigieren:
+    ```bash
+    cd <studentfrontend>
+    ```
+
+8. Installieren der Abhängigkeiten:
+    ```bash
+    npm i
+    ```
+   
+9. Zum Projektverzeichnis Chat navigieren:
+    ```bash
+    cd <chat>
+    ```
+
+10. Installieren der Abhängigkeiten:
+    ```bash
+    npm i
+    ```
+
+
+10. Starte die Applikation:
+    ```bash
+    npm run
+    ```
+
+
+**Passe deine Befehle entsprechend deiner IDE an. 
+
+
     * Dieser Befehl startet alle Komponenten (Frontend, Backend, Chat, Datenbank) in Docker-Containern.
     * Das Flag `--build` sorgt dafür, dass die Docker-Images bei Bedarf neu erstellt werden.
 4.  Zugriff auf die Anwendung:
@@ -50,24 +97,33 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
 ## Technologien
 
 * **Backend:**
-    * Spring Boot
-    * JPA (Java Persistence API)
-    * PostgreSQL
-    * MapStruct
-    * Lombok
-    * Validation API
-    * Docker
+  * Spring Boot
+  * JPA (Java Persistence API)
+  * PostgreSQL
+  * MapStruct
+  * Lombok
+  * Validation API
+  * Docker
 * **Frontend:**
-    * React
-    * Jest
-    * Material UI
-    * stompjs
-    * sockjs-client
-    * Docker
+  * React
+  * Jest
+  * Material UI
+  * stompjs
+  * sockjs-client
+  * Docker
 * **CI/CD:**
-    * GitHub Actions
-    * Docker
-    * Render
+  * GitHub Actions
+  * Docker
+  * Render
+* **Chat:**
+  * Spring Websocket
+  * STOMP
+  * SockJS
+  * Chat Service (Spring Boot)
+* **Datenbank:**
+  * PostgreSQL
+  * JPA (Java Persistence API)
+  * Flyway
 
 ## Zusätzliche Erläuterungen
 
@@ -241,6 +297,12 @@ Die Anwendung wird auf der Cloud-Plattform Render gehostet. Hierbei werden Docke
 * Render verwendet die zuvor gespeicherten Docker Images, um die Anwendung zu deployen.
 * Die externe PostgreSQL-Datenbank wird als Service in Render eingebunden, und die Verbindungsdaten werden über Umgebungsvariablen an die Backend-Komponenten übergeben.
 
+## Render Deployment (Vorgang)
 
-
-
+1.  GitHub-Repository mit Render verbinden.
+2.  Neuen Web Service erstellen.
+3.  Umgebungsvariablen konfigurieren.
+* Die Applikation ist nun auch online erreichbar unter folgenden links: 
+4. Backend: https://studentensystem-b5i7.onrender.com
+5. Frontend: https://studentensystem-frontend.onrender.com/
+6. Chat: 
