@@ -15,21 +15,21 @@ public class SwaggerConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 // Globales CORS-Mapping für alle Endpunkte
                 registry.addMapping("/**") // Erlaube alle API-Routen
-                        .allowedOrigins("http://localhost:3000", "https://deine-domain.com") // Erlaubte Frontend-URLs
+                        .allowedOrigins("https://studentensystem-frontend.onrender.com", "https://deine-domain.com") // Erlaubte Frontend-URLs
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Erlaubte HTTP-Methoden
                         .allowedHeaders("*") // Erlaube alle Headers
                         .allowCredentials(true); // Erlaube Authentifizierungsinformationen wie Cookies
 
                 // Optional: Spezifisches CORS-Mapping für Swagger UI (falls separat behandelt werden muss)
                 registry.addMapping("/swagger-ui/**")
-                        .allowedOrigins("http://localhost:3000", "https://deine-domain.com")
+                        .allowedOrigins("https://studentensystem-frontend.onrender.com", "https://deine-domain.com")
                         .allowedMethods("GET", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
 
                 // Optional: Spezifisches CORS-Mapping für OpenAPI-Dokumentation
                 registry.addMapping("/v3/api-docs/**")
-                        .allowedOrigins("http://localhost:3000", "https://deine-domain.com")
+                        .allowedOrigins("https://studentensystem-frontend.onrender.com", "https://deine-domain.com")
                         .allowedMethods("GET", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
