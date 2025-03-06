@@ -28,7 +28,7 @@ export default function Course() {
 
   // Fetch Courses
   const fetchCourses = () => {
-    fetch("http://localhost:8080/course")
+    fetch("https://studentensystem-b5i7.onrender.com/course")
         .then((response) => response.json())
         .then((result) => setCourses(result))
         .catch((err) => setError("Fehler beim Abrufen der Kurse."));
@@ -49,7 +49,7 @@ export default function Course() {
 
     const course = { name, description };
 
-    fetch("http://localhost:8080/course", {
+    fetch("https://studentensystem-b5i7.onrender.com/course", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(course),
@@ -71,7 +71,7 @@ export default function Course() {
   };
 
   const handleDelete = (courseId) => {
-    fetch(`http://localhost:8080/course/${courseId}`, {
+    fetch(`https://studentensystem-b5i7.onrender.com/course/${courseId}`, {
       method: "DELETE",
     })
         .then((response) =>

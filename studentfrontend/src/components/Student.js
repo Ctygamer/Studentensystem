@@ -38,7 +38,7 @@ export default function Student() {
 
   // Fetch students function
   const fetchStudents = () => {
-    fetch("http://localhost:8080/student")
+    fetch("https://studentensystem-b5i7.onrender.com/student")
       .then((response) => response.json())
       .then((result) => {
         setStudents(result);
@@ -47,7 +47,7 @@ export default function Student() {
 
   // Fetch courses only on mount
   useEffect(() => {
-    fetch("http://localhost:8080/course")
+    fetch("https://studentensystem-b5i7.onrender.com/course")
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -85,7 +85,7 @@ export default function Student() {
       courses: selectedCourses.map((id) => ({ id: parseInt(id) }))
     };
 
-    fetch("http://localhost:8080/student", {
+    fetch("https://studentensystem-b5i7.onrender.com/student", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(student)
@@ -99,7 +99,7 @@ export default function Student() {
 
   // Delete student
   const handleDelete = (studentId) => {
-    fetch(`http://localhost:8080/student/${studentId}`, {
+    fetch(`https://studentensystem-b5i7.onrender.com/student/${studentId}`, {
       method: "DELETE"
     }).then(() => {
       console.log(`Student ${studentId} gelöscht`);
@@ -135,7 +135,7 @@ export default function Student() {
     // Convert course IDs into an array of integers
     const coursesPayload = newSelectedCourses.map(courseId => parseInt(courseId, 10));
 
-    fetch(`http://localhost:8080/student/${studentId}/update-courses`, {
+    fetch(`https://studentensystem-b5i7.onrender.com/student/${studentId}/update-courses`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(coursesPayload)
