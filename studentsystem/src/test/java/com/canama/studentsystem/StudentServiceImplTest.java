@@ -19,27 +19,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+// @ExtendWith Annotation wird verwendet, um die MockitoExtension-Klasse zu verwenden.
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
 
+    // @Mock Annotation wird verwendet, um ein Mock-Objekt zu erstellen.
     @Mock
     private StudentRepository studentRepository;
 
     @Mock
     private StudentMapper studentMapper;
 
+    // @InjectMocks Annotation wird verwendet, um die Abhängigkeiten des zu testenden Objekts zu injizieren.
     @InjectMocks
     private StudentServiceImpl studentService;
 
     private Student student;
     private StudentDto studentDto;
 
+    // @BeforeEach Annotation wird verwendet, um eine Methode auszuführen, bevor jeder Testfall ausgeführt wird.
     @BeforeEach
     void setUp() {
-        student = new Student(1, "John Doe", "123 Street", List.of());
+        student = new Student(1, "John Doe", "123 Street", List.of()); // List.of() erstellt eine leere Liste.
         studentDto = new StudentDto(1, "John Doe", "123 Street", List.of());
     }
 
+    // saveStudent() Methode sollte einen Studenten speichern und den gespeicherten Studenten zurückgeben.
     @Test
     void getAllStudents_ShouldReturnListOfStudents() {
         when(studentRepository.findAll()).thenReturn(List.of(student));
@@ -51,6 +56,7 @@ class StudentServiceImplTest {
         verify(studentRepository, times(1)).findAll();
     }
 
+    // saveStudent() Methode sollte einen Studenten speichern und den gespeicherten Studenten zurückgeben.
     @Test
     void deleteStudentById_ShouldThrowException_WhenStudentNotFound() {
         when(studentRepository.existsById(1)).thenReturn(false);
@@ -59,6 +65,7 @@ class StudentServiceImplTest {
         assertThat(exception.getMessage()).isEqualTo("Student mit der Id: 1 nicht gefunden");
     }
 
+    // deleteStudentById() Methode sollte einen Studenten löschen, wenn der Student existiert.
     @Test
     void deleteStudentById_ShouldDelete_WhenStudentExists() {
         when(studentRepository.existsById(1)).thenReturn(true);

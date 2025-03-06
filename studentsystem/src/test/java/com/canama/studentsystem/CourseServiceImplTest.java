@@ -22,24 +22,29 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CourseServiceImplTest {
 
+    // @Mock Annotation wird verwendet, um ein Mock-Objekt zu erstellen.
     @Mock
     private CourseRepository courseRepository;
 
     @Mock
     private CourseMapper courseMapper;
 
+    // @InjectMocks Annotation wird verwendet, um die Abhängigkeiten des zu testenden Objekts zu injizieren.
     @InjectMocks
     private CourseServiceImpl courseService;
 
     private Course course;
     private CourseDto courseDto;
 
+    // @BeforeEach Annotation wird verwendet, um eine Methode auszuführen, bevor jeder Testfall ausgeführt wird.
     @BeforeEach
     void setUp() {
+        // Erstellen eines Kurs-Objekts und eines KursDto-Objekts.
         course = new Course(1, "Math", "Algebra", List.of());
         courseDto = new CourseDto(1, "Math", "Algebra");
     }
 
+    // getAlleKurse() Methode sollte eine Liste von Kursen zurückgeben.
     @Test
     void getAllCourses_ShouldReturnListOfCourses() {
         when(courseRepository.findAll()).thenReturn(List.of(course));
@@ -51,6 +56,7 @@ class CourseServiceImplTest {
         verify(courseRepository, times(1)).findAll();
     }
 
+    // addCourse() Methode sollte einen Kurs hinzufügen und den hinzugefügten Kurs zurückgeben.
     @Test
     void addCourse_ShouldSaveAndReturnCourseDto() {
         when(courseMapper.toEntity(courseDto)).thenReturn(course);
@@ -63,6 +69,7 @@ class CourseServiceImplTest {
         verify(courseRepository, times(1)).save(course);
     }
 
+    // deleteCourseById() Methode sollte eine RuntimeException werfen, wenn der Kurs nicht gefunden wird.
     @Test
     void deleteCourseById_ShouldThrowException_WhenCourseNotFound() {
         when(courseRepository.findById(1)).thenReturn(Optional.empty());
@@ -71,6 +78,7 @@ class CourseServiceImplTest {
         assertThat(exception.getMessage()).isEqualTo("Kurs mit der Id: 1 nicht gefunden");
     }
 
+    // deleteCourseById() Methode sollte einen Kurs löschen, wenn der Kurs keine Studenten hat.
     @Test
     void deleteCourseById_ShouldDelete_WhenCourseHasNoStudents() {
         when(courseRepository.findById(1)).thenReturn(Optional.of(course));
