@@ -3,6 +3,8 @@ package com.canama.studentsystem.controller;
     import com.canama.studentsystem.DTO.StudentDto;
     import com.canama.studentsystem.service.StudentService;
     import lombok.RequiredArgsConstructor;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ package com.canama.studentsystem.controller;
     public class StudentController {
 
         private final StudentService studentService;
+        private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
         /**
          * Fügt einen neuen Studenten hinzu.
@@ -33,17 +36,21 @@ package com.canama.studentsystem.controller;
          */
         @PostMapping
         public ResponseEntity<?> add(@Valid @RequestBody StudentDto studentDto, BindingResult bindingResult) {
+            logger.info("Versuche, einen neuen Studenten hinzuzufügen: {}", studentDto);
             if (bindingResult.hasErrors()) {
                 List<String> errors = bindingResult.getFieldErrors().stream()
                         .map(error -> error.getField() + ": " + error.getDefaultMessage())
                         .collect(Collectors.toList());
+                logger.warn("Validierungsfehler beim Hinzufügen eines Studenten: {}", errors);
                 return ResponseEntity.badRequest().body(errors);
             }
 
             try {
                 StudentDto savedStudent = studentService.saveStudent(studentDto);
+                logger.info("Student erfolgreich hinzugefügt: {}", savedStudent);
                 return ResponseEntity.ok(savedStudent);
             } catch (Exception e) {
+                logger.error("Fehler beim Hinzufügen eines Studenten: {}", e.getMessage(), e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
             }
         }
