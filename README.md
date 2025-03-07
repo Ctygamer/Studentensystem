@@ -304,7 +304,8 @@ Die Anwendung wird auf der Cloud-Plattform Render gehostet. Hierbei werden Docke
 * Die Applikation ist nun auch online erreichbar unter folgenden links: 
 4. Backend: https://studentensystem-b5i7.onrender.com
 5. Frontend: https://studentensystem-frontend.onrender.com/
-6. Chat: https://studentensystem-frontend.onrender.com/chat 
+6. Chat: https://studentensystem-frontend.onrender.com/
+  dann auf den Chat Button klicken
 
 ## Authentifizierung
 * Wir haben für den Chat eine einfache Authentizierung implementiert.
