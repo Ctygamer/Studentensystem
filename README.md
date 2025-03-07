@@ -49,16 +49,20 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
 
 5.  Zum Projektverzeichnis Backend navigieren:
     ```bash
-    cd <studentsystem>
+    cd studentsystem
     ```
     
 6. Installieren der Abhängigkeiten:
     ```bash
     npm i
     ```
+    
+npm i anstelle von npm install verwendet.
+
+    
 7.  Zum Projektverzeichnis Frontend navigieren:
     ```bash
-    cd <studentfrontend>
+    cd studentfrontend
     ```
 
 8. Installieren der Abhängigkeiten:
@@ -68,7 +72,7 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
    
 9. Zum Projektverzeichnis Chat navigieren:
     ```bash
-    cd <chat>
+    cd chat
     ```
 
 10. Installieren der Abhängigkeiten:
