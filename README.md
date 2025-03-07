@@ -1,11 +1,11 @@
 # Studentensystem
-__________________________________________________________________
+
 Studentensystem mit React und SpringBoot. Dieses Repository beinhaltet den Quellcode für ein umfassendes Studentensystem, das eine interaktive Chat-Funktionalität integriert. Das System ist als Microservice-Architektur konzipiert und besteht aus drei Hauptkomponenten: einem React-basierten Frontend, einem Spring-Boot-Backend für die Hauptlogik und einem separaten Spring-Boot-Service für die Chat-Funktionalität. Die Datenhaltung erfolgt über eine externe PostgreSQL-Datenbank, die ebenfalls auf Render gehostet wird.
 
 
 
 ## Externe Datenbank
-__________________________________________________________________
+
 Für die Speicherung von Daten wird eine externe Postgres Datenbank verwendet, die ebenfalls auf Render gehostet wird.
 - **hostname:** dpg-cv1bpftds78s73dmomk0-a.frankfurt-postgres.render.com
 - **database:** geraete
@@ -14,7 +14,7 @@ Für die Speicherung von Daten wird eine externe Postgres Datenbank verwendet, d
 
 
 ## Projektarchitektur und Komponenten
-__________________________________________________________________
+
 * **Frontend (studentfrontend):**
     * Implementiert mit React, bietet eine dynamische und benutzerfreundliche Oberfläche.
     * Kommuniziert über REST-APIs mit dem Backend, um Daten abzurufen und zu aktualisieren.
@@ -35,7 +35,7 @@ __________________________________________________________________
     * **WICHTIG:** Die oben genannten Anmeldeinformationen sind nur für Entwicklungszwecke. In einer Produktionsumgebung sind diese durch sichere Umgebungsvariablen zu ersetzen.
 
 ## Lokale Entwicklung
-__________________________________________________________________
+
 
 Für die lokale Entwicklung sind folgende Schritte notwendig:
 
@@ -110,7 +110,7 @@ npm i anstelle von npm install verwendet.
 
 
 ## Technologien
-__________________________________________________________________
+
 * **Backend:**
     * Spring Boot
     * JPA (Java Persistence API)
@@ -141,7 +141,7 @@ __________________________________________________________________
     * Flyway
 
 ## Zusätzliche Erläuterungen
-__________________________________________________________________
+
 * **Docker:**
     * Wird sowohl im Backend als auch im Frontend verwendet, um eine konsistente und reproduzierbare Umgebung für Entwicklung, Tests und Bereitstellung zu schaffen.
     * Ermöglicht die Containerisierung der Anwendungen, was die Bereitstellung auf Render vereinfacht.
@@ -155,11 +155,11 @@ __________________________________________________________________
     * Cloud Plattform wo die Docker Container gehostet werden.
 
 ## Backend (studentsystem)
-__________________________________________________________________
+
 Das Backend des Studentensystems ist mit Spring Boot entwickelt und implementiert eine RESTful API zur Verwaltung von Studenten und Kursen. Es nutzt JPA für die Datenpersistenz und MapStruct für das Mapping zwischen Entitäten und DTOs.
 
 ### Architektur und Komponenten
-__________________________________________________________________
+
 * **Controller:**
     * `CourseController.java`: Verwaltet Kurse, inklusive Hinzufügen, Löschen und Zuweisen von Studenten zu Kursen.
     * `StudentController.java`: Verwaltet Studenten, inklusive Hinzufügen, Löschen und Aktualisieren von Kurszuweisungen.
@@ -188,7 +188,7 @@ __________________________________________________________________
     * `SwaggerConfig.java`: Konfiguration für CORS-Einstellungen.
 
 ### Funktionalitäten
-__________________________________________________________________
+
 * **Kursverwaltung:**
     * Hinzufügen, Abrufen und Löschen von Kursen.
     * Zuweisen von Studenten zu Kursen.
@@ -209,7 +209,7 @@ __________________________________________________________________
     * Konfiguration von Cross-Origin Resource Sharing (CORS) zur Ermöglichung von Anfragen vom Frontend.
 
 ## Frontend-Details (studentfrontend)
-__________________________________________________________________
+
 Das Frontend ist mit React aufgebaut und bietet eine Single-Page-Application (SPA) mit folgenden Komponenten:
 
 * **App.css:**
@@ -238,7 +238,7 @@ Das Frontend ist mit React aufgebaut und bietet eine Single-Page-Application (SP
     * Nutzt Material-UI für das Design.
 
 ## Chat-Funktionalität (chat Service)
-__________________________________________________________________
+
 Der Chat-Service nutzt Websockets für die Echtzeit-Kommunikation. Hier sind die Hauptkomponenten:
 
 * **WebsocketConfig.java:**
@@ -256,11 +256,11 @@ Der Chat-Service nutzt Websockets für die Echtzeit-Kommunikation. Hier sind die
     * Enum für den Status einer Nachricht.
 
 # Teststrategie
-__________________________________________________________________
+
 Die Teststrategie dieses Projekts umfasst Unit-Tests und Integrationstests, um eine hohe Codequalität und Zuverlässigkeit sicherzustellen.
 
 ### Unit-Tests
-__________________________________________________________________
+
 * **Umfassende Unit-Tests**: Für Controller, Services und DTOs wurden gut strukturierte Unit-Tests mit Mockito implementiert.
     * Die Tests decken verschiedene Szenarien ab, einschließlich positiver und negativer Fälle (z. B. Kurs nicht gefunden).
     * Die Validierung von DTOs mit Bean Validation ist ebenfalls gut abgedeckt.
@@ -273,20 +273,20 @@ __________________________________________________________________
     * Die Tests sind dadurch sehr performant.
 
 ### Integrationstests
-__________________________________________________________________
+
 * Integrationstests wurden implementiert, um die Interaktion zwischen verschiedenen Komponenten zu überprüfen.
 * Diese Tests stellen sicher, dass die Datenzugriffsschicht (Repositories) korrekt funktioniert und dass die Abfragen die erwarteten Ergebnisse liefern.
 * Die Integrationstests decken End-to-End-Szenarien ab, z.B. das Hinzufügen eines Studenten zu einem Kurs oder das Abrufen aller Kurse eines Studenten.
 * Die Integrationstests werden über ein eigenes Maven Profil ausgeführt.
 
 # CI/CD-Pipeline (Continuous Integration/Continuous Deployment)
-__________________________________________________________________
+
 ## Überblick
-__________________________________________________________________
+
 Diese CI/CD-Pipeline automatisiert den Entwicklungs-, Test- und Deployment-Prozess für ein Projekt mit Frontend-, Backend- und Chat-Komponenten. Sie unterstützt verschiedene Entwicklungszweige (develop, staging, main, ci-cd) und ermöglicht so parallele Entwicklung und Testung in unterschiedlichen Umgebungen.
 
 ## Ziele des Workflows
-__________________________________________________________________
+
 * **Automatisierte Tests zur Qualitätssicherung:** Unit-Tests, Integrationstests und Linting werden automatisch durchgeführt, um Fehler frühzeitig zu erkennen und die Codequalität zu sichern.
 * **Automatisierte Bereitstellung:** Neue Funktionen und Fehlerbehebungen werden schnell und zuverlässig in die jeweiligen Umgebungen (dev, staging, production) bereitgestellt.
 * **Sicherstellung der Code-Qualität und Sicherheit:** Code-Qualitätsprüfungen und der Einsatz von Umgebungsvariablen für sensible Daten sind integriert.
@@ -297,7 +297,7 @@ __________________________________________________________________
 * **Dynamische Konfigurationsauswahl:** Der Build-Prozess wählt basierend auf dem Branch dynamisch die richtige Konfigurationsdatei aus.
 
 ## Workflow-Details
-__________________________________________________________________
+
 Die Pipeline besteht aus zwei Hauptworkflows:
 
 * **`ci-cd.yml` (im `ci-cd`-Branch):**
@@ -316,7 +316,7 @@ Die Pipeline besteht aus den folgenden Jobs:
 * **deploy:** Stellt die Anwendung auf Render bereit.
 
 ### CI/CD-Workflow (für Entwickler)
-__________________________________________________________________
+
 1.  **Neuen Branch `ci-cd` erstellen:**
     ```bash
     git checkout -b ci-cd
@@ -331,31 +331,31 @@ __________________________________________________________________
 6.  **Pull Request mergen.**
 
 ## Container Docker
-__________________________________________________________________
+
 Die Pipeline verwendet Docker für die Erstellung von Images, um eine konsistente Ausführungsumgebung zu gewährleisten. Die Images werden in der GitHub Container Registry (GHCR) gespeichert.
 
 ## Pipeline Environments
-__________________________________________________________________
+
 * **develop:** Entwicklungsumgebung für neue Funktionen und Fehlerbehebungen.
 * **staging:** Testumgebung, die der Produktionsumgebung ähnelt.
 * **production:** Produktionsumgebung für Endbenutzer.
 * **ci-cd:** Umgebung zum Testen der Pipeline selbst.
 
 ## Verwendung
-__________________________________________________________________
+
 1.  Pushen Sie Änderungen in den entsprechenden Branch (develop, staging, main, ci-cd).
 2.  Die Pipeline wird automatisch ausgelöst.
 3.  Überwachen Sie die Pipeline-Ausführung in GitHub Actions.
 
 ## Konfiguration
-__________________________________________________________________
+
 * Konfigurieren Sie die `application-\*.properties`-Dateien im Verzeichnis `studentsystem/src/main/resources/` für jede Umgebung.
 * Konfigurieren Sie die Render Service IDs und API Keys in GitHub Secrets.
 * Konfigurieren Sie Umgebungsvariablen in GitHub Actions Environments.
 
 
 ### Deployment auf Render
-__________________________________________________________________
+
 Die Anwendung wird auf der Cloud-Plattform Render gehostet. Hierbei werden Docker-Container verwendet, um eine konsistente und reproduzierbare Umgebung zu schaffen.
 
 * Die `docker-compose.yml`-Datei definiert die Struktur der Anwendung und die Abhängigkeiten zwischen den Komponenten.
@@ -363,11 +363,11 @@ Die Anwendung wird auf der Cloud-Plattform Render gehostet. Hierbei werden Docke
 * Die externe PostgreSQL-Datenbank wird als Service in Render eingebunden, und die Verbindungsdaten werden über Umgebungsvariablen an die Backend-Komponenten übergeben.
 
 # Render Deployment 
-__________________________________________________________________
+
 Wir haben unsere Anwendung erfolgreich auf Render.com bereitgestellt, einer Cloud-Plattform-as-a-Service (PaaS), die es uns ermöglicht, Webanwendungen und APIs direkt aus unserem GitHub-Repository bereitzustellen.
 
 ## 1. Bereitstellungsvorgang
-__________________________________________________________________
+
 * Wir haben ein Render-Konto erstellt und unser GitHub-Repository verbunden.
 * Für jeden unserer Services (Backend, Frontend, Chat) haben wir einen neuen Web Service in unserem Render-Dashboard erstellt.
 * Wir haben die Build-Einstellungen konfiguriert, einschließlich der Build-Befehle und Start-Kommandos, die für unsere Anwendung erforderlich sind.
@@ -375,7 +375,7 @@ __________________________________________________________________
 * Zusätzlich haben wir die benötigten Umgebungsvariablen in den Render-Einstellungen für jeden Service konfiguriert, um die korrekte Funktion der Applikation sicherzustellen.
 
 ## 2. Anwendung online erreichbar
-__________________________________________________________________
+
 Unsere Anwendung ist nun unter den folgenden Links online erreichbar:
 
 * **Backend:** `https://studentensystem-b5i7.onrender.com`
@@ -383,26 +383,26 @@ Unsere Anwendung ist nun unter den folgenden Links online erreichbar:
 * **Chat:** `https://studentensystem-frontend.onrender.com/chat`
 
 ## 3. Chat-Funktionalität testen
-__________________________________________________________________
+
 * Um die Chat-Funktionalität zu testen, öffnen wir die Frontend-Anwendung unter `https://studentensystem-frontend.onrender.com/`.
 * Testen die Funktionalität und ob die Speicherung zur Datenbank funktioniert und auf den anderen Laptops angezeigt werden, wo auch im Team sind. Funktioniert soweit einwandfrei.
 * Wir suchen den "Chat"-Button und klicken darauf.
 * Dies sollte uns zur Chat-Funktionalität unserer Anwendung unter `https://studentensystem-frontend.onrender.com/chat` weiterleiten. Was es erfolgreich macht und auch die anderen Chat User anzeigt, Nachrichten versendet in Echtzeit keine verzögerungen. Das funktioniert auch einwandfrei.
 
 ## 4. Frontend Studentenkurse testen
-__________________________________________________________________
+
 *Die Anwendung ist wie erwartet am laufen und wird auch nochmals getestet, Funktionalitäten wurden alle nochmals getestet und werden auch bei allen Usern einwandfrei angezeigt und in der DB gespeichert.
 
 ## 5. Backen testen
-__________________________________________________________________
+
 * Das Backend wird geladen und ist mit der DB verbunden.
 
 ## 6. Datenbank testen
-__________________________________________________________________
+
 * Die Datenbank wird geladen und alle Funktionen die Implementiert wurden funktionieren einwandfrei.
 
 ## Zusätzliche Informationen
-__________________________________________________________________
+
 * **GitHub Actions (CI/CD):** Wir haben GitHub Actions verwendet, um den Deployment-Prozess zu automatisieren.
 * **Render API:** Wir können die Render API verwenden, um Bereitstellungen programmatisch zu steuern.
 * **Dokumentation:** Die offizielle Render-Dokumentation ist eine wertvolle Ressource für weitere Informationen.
@@ -410,13 +410,13 @@ __________________________________________________________________
 
 
 # Log-for-CourseController
-__________________________________________________________________
+
 ## Überblick
-__________________________________________________________________
+
 Dieser Controller verwaltet Kurse und bietet Endpunkte für das Abrufen, Hinzufügen, Löschen und Zuweisen von Studenten zu Kursen.
 
 ## Endpunkte
-__________________________________________________________________
+
 * **GET /course:**
     * Gibt eine Liste aller Kurse zurück.
     * Logs:
@@ -440,7 +440,7 @@ __________________________________________________________________
         * "Fehler beim Hinzufügen von Studenten: {errorMessage}" (ERROR)
 
 ## Logging
-__________________________________________________________________
+
 Der Controller verwendet SLF4j für die Protokollierung. Die folgenden Log-Meldungen werden generiert:
 
 * **INFO:**
@@ -450,18 +450,18 @@ Der Controller verwendet SLF4j für die Protokollierung. Die folgenden Log-Meldu
     * Fehler beim Hinzufügen von Studenten zu einem Kurs.
 
 ## Konfiguration
-__________________________________________________________________
+
 
 * SLF4j und eine entsprechende Logging-Implementierung.
 
 # Log-for-StudentController
-__________________________________________________________________
+
 ## Überblick
-__________________________________________________________________
+
 Dieser Controller verwaltet Studenten und bietet Endpunkte für das Hinzufügen, Abrufen, Löschen und Aktualisieren von Kursen für Studenten.
 
 ## Endpunkte
-__________________________________________________________________
+
 * **POST /student:**
     * Fügt einen neuen Studenten hinzu.
     * Validiert die Eingabedaten.
@@ -485,7 +485,7 @@ __________________________________________________________________
         * `ERROR: Fehler beim Aktualisieren der Kurse des Studenten mit ID {id}: {errorMessage}` (bei Fehlern)
 
 ## Logging
-__________________________________________________________________
+
 Der Controller verwendet SLF4j für die Protokollierung. Die folgenden Log-Meldungen werden generiert:
 
 * **WARN:**
@@ -496,22 +496,71 @@ Der Controller verwendet SLF4j für die Protokollierung. Die folgenden Log-Meldu
 * **ERROR:**
     * Fehler, die während der Ausführung der Endpunkte auftreten.
 
-## Branching
-__________________________________________________________________
-* Wir haben verschiedene Branches hinzugefügt, welche auf die erledigten Änderungen bezogen sind, wie zb Readme, ci-cd, postgressDB.
+# Branching
 
-## Authentication 
-__________________________________________________________________
+* Wir haben verschiedene Branches hinzugefügt, welche auf die erledigten Änderungen bezogen sind, wie zb Readme, postgressDB, cd-ci.
+
+# Docker 
+Wir haben mit Docker gearbeitet, verschiedene Microservices angewendet und Dockerfiles implementiert.
+
+## Docker Compose
+
+Dieses Projekt verwendet Docker Compose, um das Studentenverwaltungssystem mit Datenbank, Backend, Frontend und Chat zu containerisieren.
+
+## Voraussetzungen
+
+* Docker und Docker Compose müssen installiert sein.
+
+## Aufbau
+
+Die Anwendung besteht aus folgenden Komponenten:
+
+* **Datenbank (MySQL):** Speichert die Daten des Studentenverwaltungssystems.
+* **Backend (Spring Boot):** Bietet die REST-API für die Verwaltung von Studenten und Kursen.
+* **Frontend (React):** Die Benutzeroberfläche für das Studentenverwaltungssystem.
+* **Chat (Node.js):** Ein Chat-Backend für die Kommunikation.
+ 
+Im Abschnitt, lokale Entwicklung ist beschrieben wie man das build machen kann.
+
+## Dockerfiles 
+
+Das Dockerfile ist eine Textdatei, die Anweisungen zum Erstellen eines Docker-Images enthält. Es dient als Bauplan, der definiert, wie eine Anwendung und ihre Abhängigkeiten in einem Container verpackt werden sollen.
+
+## Hauptbestandteile
+
+* **Basis-Image (FROM):**
+    * Jedes Dockerfile beginnt mit der Angabe eines Basis-Images.
+    * Dies ist das Betriebssystem oder die Laufzeitumgebung, auf der die Anwendung laufen wird.
+    * Das Basis-Image kann ein offizielles Image von Docker Hub oder ein benutzerdefiniertes Image sein.
+* **Arbeitsverzeichnis (WORKDIR):**
+    * Definiert das Arbeitsverzeichnis im Container, in dem die nachfolgenden Befehle ausgeführt werden.
+* **Abhängigkeiten kopieren (COPY/ADD):**
+    * Kopiert Dateien und Verzeichnisse vom Hostsystem in den Container.
+    * Dies wird verwendet, um Anwendungsabhängigkeiten, Quellcode oder Konfigurationsdateien in den Container zu übertragen.
+* **Befehle ausführen (RUN):**
+    * Führt Befehle im Container aus, um Software zu installieren, Konfigurationen vorzunehmen oder die Anwendung zu erstellen.
+    * Dies wird verwendet, um die Umgebung für die Anwendung einzurichten.
+* **Port freigeben (EXPOSE):**
+    * Gibt an, welche Ports die Anwendung im Container verwenden wird.
+    * Dies dient zur Dokumentation und ermöglicht die Portweiterleitung beim Starten des Containers.
+* **Startbefehl (CMD/ENTRYPOINT):**
+    * Definiert den Befehl, der beim Starten des Containers ausgeführt wird.
+    * Dies startet die Anwendung oder den Dienst, der im Container laufen soll.
+  
+Welche alle in der Applikation enthaten sind.
+
+# Authentication 
+
 * Noch nicht erfüllt
 
 
-## Observe Tools Grafana
-__________________________________________________________________
+# Observe Tools Grafana
+
 **
 noch nicht erfüllt
 
 
-## Kubernetes
-__________________________________________________________________
+# Kubernetes
+
 **
 noch nicht erfüllt 
