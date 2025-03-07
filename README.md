@@ -300,17 +300,42 @@ Die Anwendung wird auf der Cloud-Plattform Render gehostet. Hierbei werden Docke
 * Render verwendet die zuvor gespeicherten Docker Images, um die Anwendung zu deployen.
 * Die externe PostgreSQL-Datenbank wird als Service in Render eingebunden, und die Verbindungsdaten werden über Umgebungsvariablen an die Backend-Komponenten übergeben.
 
-## Render Deployment (Vorgang)
+# Render Deployment (Bereitstellung)
 
-1.  GitHub-Repository mit Render verbinden.
-2.  Neuen Web Service erstellen.
-3.  Umgebungsvariablen konfigurieren.
-* Die Applikation ist nun auch online erreichbar unter folgenden links: 
-4. Backend: https://studentensystem-b5i7.onrender.com
-5. Frontend: https://studentensystem-frontend.onrender.com/
-6. Chat: https://studentensystem-frontend.onrender.com/
-  
-  anschliessend auf den Chat Button klicken
+Wir haben unsere Anwendung erfolgreich auf Render.com bereitgestellt, einer Cloud-Plattform-as-a-Service (PaaS), die es uns ermöglicht, Webanwendungen und APIs direkt aus unserem GitHub-Repository bereitzustellen.
+
+## 1. Bereitstellungsvorgang
+
+* Wir haben ein Render-Konto erstellt und unser GitHub-Repository verbunden.
+* Für jeden unserer Services (Backend, Frontend, Chat) haben wir einen neuen Web Service in unserem Render-Dashboard erstellt.
+* Wir haben die Build-Einstellungen konfiguriert, einschließlich der Build-Befehle und Start-Kommandos, die für unsere Anwendung erforderlich sind.
+* Wir haben unsere Anwendung mit den entsprechenden Service-Namen, Regionen und Instance Types bereitgestellt.
+* Zusätzlich haben wir die benötigten Umgebungsvariablen in den Render-Einstellungen für jeden Service konfiguriert, um die korrekte Funktion der Applikation sicherzustellen.
+
+## 2. Anwendung online erreichbar
+
+Unsere Anwendung ist nun unter den folgenden Links online erreichbar:
+
+* **Backend:** `https://studentensystem-b5i7.onrender.com`
+* **Frontend:** `https://studentensystem-frontend.onrender.com/`
+* **Chat:** `https://studentensystem-frontend.onrender.com/chat`
+
+## 3. Chat-Funktionalität testen
+
+* Um die Chat-Funktionalität zu testen, öffnen wir die Frontend-Anwendung unter `https://studentensystem-frontend.onrender.com/`.
+* Testen die Funktionalität und ob die Speicherung zur Datenbank funktioniert und auf den anderen Laptops angezeigt werden, wo auch im Team sind. Funktioniert soweit einwandfrei.
+* Wir suchen den "Chat"-Button und klicken darauf.
+* Dies sollte uns zur Chat-Funktionalität unserer Anwendung unter `https://studentensystem-frontend.onrender.com/chat` weiterleiten. Was es erfolgreich macht und auch die anderen Chat User anzeigt, Nachrichten versendet in Echtzeit keine verzögerungen. Das funktioniert auch einwandfrei.
+
+## 4. Frontend Studentenkurse testen
+*Die Anwendung ist wie erwartet am laufen und wird auch nochmals getestet, Funktionalitäten wurden alle nochmals getestet und werden auch bei allen Usern einwandfrei angezeigt und in der DB gespeichert.
+
+## Zusätzliche Informationen
+
+* **GitHub Actions (CI/CD):** Wir haben GitHub Actions verwendet, um den Deployment-Prozess zu automatisieren.
+* **Render API:** Wir können die Render API verwenden, um Bereitstellungen programmatisch zu steuern.
+* **Dokumentation:** Die offizielle Render-Dokumentation ist eine wertvolle Ressource für weitere Informationen.
+* **Workflow:** Wir haben in CI-CD workflows.yaml ein entsprechend passendes deploy geschrieben das die Automatisierung bei änderungen durch den push Vorgang gemacht werden. 
 
 ## Authentifizierung
 * Wir haben für den Chat eine einfache Authentizierung implementiert.
