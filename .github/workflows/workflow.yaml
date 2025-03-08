@@ -47,9 +47,9 @@ jobs:
           mvn clean package -DskipTests -DskipITs
       - name: Build Docker images
         run: |
-          docker build -t backend-image ./studentsystem
-          docker build -t frontend-image ./studentfrontend
-          docker build -t chat-image ./chat
+          docker build --no-cache -t backend-image ./studentsystem
+          docker build --no-cache -t frontend-image ./studentfrontend
+          docker build --no-cache -t chat-image ./chat
       - name: Docker login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
