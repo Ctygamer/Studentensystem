@@ -3,8 +3,8 @@ on:
     branches:
       - ci-cd
       - main
-      - postgresDB  # Korrigierte Schreibweise (falls beabsichtigt)
- jobs:
+      - postgresDB # Korrigierte Schreibweise (falls beabsichtigt)
+jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
