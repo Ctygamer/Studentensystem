@@ -5,7 +5,7 @@ on:
     branches:
       - ci-cd
       - main
-      - postgressDB
+      - postgresDB
 
 permissions:
   contents: read
@@ -115,4 +115,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
           files: studentsystem/target/surefire-reports/**/*.xml
-          github_token: ${{ secrets.GITHUB_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
