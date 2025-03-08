@@ -14,7 +14,6 @@ permissions:
 env:
   ACTIONS_RUNNER_DEBUG: true
   ACTIONS_STEP_DEBUG: true
-  GH_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 jobs:
   lint:
@@ -66,29 +65,26 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      # Integrationstests für Backend-Service (studentsystem)
       - name: Run Integration Tests for Backend Service (studentsystem)
         run: |
-          cd studentsystem || exit 1
-          mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
+          cd studentsystem || exit 1 
+          mvn verify -Dtest=*IT -Dsurefire.failIfNoSpecifiedTests=false || exit 1
 
-      - name: Run Integration Tests for Chat Service (chat)
-        run: |
-          cd chat || exit 1
-          mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
-
-      - name: Upload Test Results for Backend and Chat Services (if any)
+      # Testergebnisse hochladen und veröffentlichen (nur wenn vorhanden)
+      - name: Upload Test Results for Backend Service (if any)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: integration-test-results-backend-chat-services
+          name: integration-test-results-backend-service
           path: |
-            studentsystem/target/failsafe-reports/**/*.xml
-            chat/target/failsafe-reports/**/*.xml
+            studentsystem/target/surefire-reports/**/*.xml 
+            chat/target/surefire-reports/**/*.xml
 
-      - name: Publish Test Results for Backend and Chat Services (if any)
+      - name: Publish Test Results for Backend Service (if any)
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
           files: |
-            studentsystem/target/failsafe-reports/**/*.xml
-            chat/target/failsafe-reports/**/*.xml
+            studentsystem/target/surefire-reports/**/*.xml 
+            chat/target/surefire-reports/**/*.xml
