@@ -5,7 +5,7 @@ on:
     branches:
       - ci-cd
       - main
-      - postgresDB
+      - postgressDB
 
 permissions:
   contents: read
@@ -39,11 +39,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - name: Build Backend with Maven
+      - name: Build Backend with Maven (Skip Tests)
         run: |
           cd studentsystem
           mvn clean package -DskipTests
-      - name: Build Chat with Maven
+      - name: Build Chat with Maven (Skip Tests)
         run: |
           cd chat
           mvn clean package -DskipTests
@@ -74,31 +74,47 @@ jobs:
           push: true
           tags: ghcr.io/ctygamer/studentensystem/chat-image:latest
 
-  deploy:
+  integration-test:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Deploy Backend to Render
-        uses: fjogeleit/http-request-action@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21 for Tests
+        uses: actions/setup-java@v3
         with:
-          url: 'https://api.render.com/v1/services/srv-${{ secrets.BACKEND_SERVICE_ID }}/deploys'
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json"}'
-          bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"clearCache": "clear"}'
-      - name: Deploy Frontend to Render
-        uses: fjogeleit/http-request-action@v1
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Integrationstests für das Backend (studentsystem)
+      - name: Run Integration Tests for Backend Service (studentsystem)
+        run: |
+          cd studentsystem || exit 1 # Sicherstellen, dass der Pfad existiert.
+          mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
+
+      # Integrationstests für den Chat-Service (chat)
+      - name: Run Integration Tests for Chat Service (chat)
+        run: |
+          cd chat || exit 1 # Sicherstellen, dass der Pfad existiert.
+          mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
+
+      # Testergebnisse hochladen (Backend und Chat Services)
+      - name: Upload Test Results for Backend and Chat Services (if any)
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          url: 'https://api.render.com/v1/services/srv-${{ secrets.FRONTEND_SERVICE_ID }}/deploys'
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json"}'
-          bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"clearCache": "clear"}'
-      - name: Deploy Chat to Render
-        uses: fjogeleit/http-request-action@v1
+          name: integration-test-results-backend-chat-services
+          path:
+            - studentsystem/target/failsafe-reports/**/*.xml 
+            - chat/target/failsafe-reports/**/*.xml
+
+      # Testergebnisse veröffentlichen (Backend und Chat Services)
+      - name: Publish Test Results for Backend and Chat Services (if any)
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2.5.0 # Veröffentlicht Testergebnisse in der GitHub-Oberfläche.
         with:
-          url: 'https://api.render.com/v1/services/srv-${{ secrets.CHAT_SERVICE_ID }}/deploys'
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json"}'
-          bearerToken: ${{ secrets.RENDER_API_KEY }}
-          data: '{"clearCache": "clear"}'
+          files:
+            - studentsystem/target/failsafe-reports/**/*.xml 
+            - chat/target/failsafe-reports/**/*.xml
+
