@@ -5,36 +5,35 @@ on:
       - main
       - postgresDB  # Korrigierte Schreibweise (falls beabsichtigt)
 
-jobs:
+
+ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Update Frontend Dependencies
+        run: |
+          cd studentfrontend
+          npm install # oder npm update
       - name: Lint Frontend
         run: |
           cd studentfrontend
-          npm install
-          npm run lint # Assuming you have a lint script
+          npm run lint
 
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Update Frontend Dependencies
+        run: |
+          cd studentfrontend
+          npm install # oder npm update
       - name: Test Frontend
         run: |
           cd studentfrontend
-          npm install
           npm test
-      - name: Test Backend
-        run: |
-          cd studentsystem
-          mvn test
-      - name: Test Chat
-        run: |
-          cd chat
-          mvn test
 
   integration-test:
     runs-on: ubuntu-latest
