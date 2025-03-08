@@ -81,18 +81,24 @@ jobs:
       - name: Deploy Backend to Render
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.BACKEND_RENDER_DEPLOY_HOOK }}
+          url: 'https://api.render.com/v1/services/srv-${{ secrets.BACKEND_SERVICE_ID }}/deploys'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json"}'
+          bearerToken: ${{ secrets.RENDER_API_KEY }}
+          data: '{"clearCache": "clear"}'
       - name: Deploy Frontend to Render
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.FRONTEND_RENDER_DEPLOY_HOOK }}
+          url: 'https://api.render.com/v1/services/srv-${{ secrets.FRONTEND_SERVICE_ID }}/deploys'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json"}'
+          bearerToken: ${{ secrets.RENDER_API_KEY }}
+          data: '{"clearCache": "clear"}'
       - name: Deploy Chat to Render
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.CHAT_RENDER_DEPLOY_HOOK }}
+          url: 'https://api.render.com/v1/services/srv-${{ secrets.CHAT_SERVICE_ID }}/deploys'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json"}'
+          bearerToken: ${{ secrets.RENDER_API_KEY }}
+          data: '{"clearCache": "clear"}'
