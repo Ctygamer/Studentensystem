@@ -58,12 +58,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push Docker images to GitHub Container Registry
         run: |
-          docker tag backend-image ghcr.io/${{ github.repository_owner }}/studentensystem/backend-image:latest
-          docker push ghcr.io/${{ github.repository_owner }}/studentensystem/backend-image:latest
-          docker tag frontend-image ghcr.io/${{ github.repository_owner }}/studentensystem/frontend-image:latest
-          docker push ghcr.io/${{ github.repository_owner }}/studentensystem/frontend-image:latest
-          docker tag chat-image ghcr.io/${{ github.repository_owner }}/studentensystem/chat-image:latest
-          docker push ghcr.io/${{ github.repository_owner }}/studentensystem/chat-image:latest
+          docker tag backend-image ghcr.io/ctygamer/studentensystem/backend-image:latest
+          docker push ghcr.io/ctygamer/studentensystem/backend-image:latest
+          docker tag frontend-image ghcr.io/ctygamer/studentensystem/frontend-image:latest
+          docker push ghcr.io/ctygamer/studentensystem/frontend-image:latest
+          docker tag chat-image ghcr.io/ctygamer/studentensystem/chat-image:latest
+          docker push ghcr.io/ctygamer/studentensystem/chat-image:latest
 
   deploy:
     runs-on: ubuntu-latest
