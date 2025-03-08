@@ -17,12 +17,10 @@ jobs:
       - name: Lint Frontend
         run: |
           cd studentfrontend
-          npm run lint
- 
-  
+          npm run lint 
   build:
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
