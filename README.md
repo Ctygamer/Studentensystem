@@ -551,9 +551,9 @@ Welche alle in der Applikation enthaten sind.
 # Tasks
 *Wir haben JIRA mit unserem Repository verbunden und die Tasks erstellt als Epics.
 
-´´´
+
 ![grafik](https://github.com/user-attachments/assets/6374c2b4-528f-4583-8203-59ab2549ad40)
-´´´
+
 
 # Authentication 
 
