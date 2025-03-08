@@ -5,11 +5,13 @@ on:
     branches:
       - ci-cd
       - main
-      - postgresDB
+      - postgressDB
 
 permissions:
   contents: read
   packages: write
+  checks: write
+  pull-requests: write
 
 env:
   ACTIONS_RUNNER_DEBUG: true
@@ -91,13 +93,16 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      # Integrationstests für Backend-Service (studentsystem)
       - name: Run Integration Tests for Backend Service (studentsystem)
         run: |
           cd studentsystem || exit 1 
           mvn verify -Dtest=*IT -Dsurefire.failIfNoSpecifiedTests=false || exit 1
 
-      # Testergebnisse hochladen und veröffentlichen (nur wenn vorhanden)
+      - name: List test report directory
+        run: |
+          cd studentsystem/target
+          ls -R
+
       - name: Upload Test Results for Backend Service
         if: always()
         uses: actions/upload-artifact@v4
@@ -110,3 +115,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
           files: studentsystem/target/surefire-reports/**/*.xml
+          github_token: ${{ secrets.GITHUB_PAT }}
