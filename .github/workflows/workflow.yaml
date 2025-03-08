@@ -87,34 +87,30 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      # Integrationstests für das Backend (studentsystem)
       - name: Run Integration Tests for Backend Service (studentsystem)
         run: |
-          cd studentsystem || exit 1 # Sicherstellen, dass der Pfad existiert.
+          cd studentsystem || exit 1
           mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
 
-      # Integrationstests für den Chat-Service (chat)
       - name: Run Integration Tests for Chat Service (chat)
         run: |
-          cd chat || exit 1 # Sicherstellen, dass der Pfad existiert.
+          cd chat || exit 1
           mvn verify -Dtest=*IT -DfailIfNoTests=false || exit 1
 
-      # Testergebnisse hochladen (Backend und Chat Services)
       - name: Upload Test Results for Backend and Chat Services (if any)
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: integration-test-results-backend-chat-services
-          path:
-            - studentsystem/target/failsafe-reports/**/*.xml 
-            - chat/target/failsafe-reports/**/*.xml
+          path: |
+            studentsystem/target/failsafe-reports/**/*.xml
+            chat/target/failsafe-reports/**/*.xml
 
-      # Testergebnisse veröffentlichen (Backend und Chat Services)
       - name: Publish Test Results for Backend and Chat Services (if any)
         if: always()
-        uses: EnricoMi/publish-unit-test-result-action@v2.5.0 # Veröffentlicht Testergebnisse in der GitHub-Oberfläche.
+        uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
-          files:
-            - studentsystem/target/failsafe-reports/**/*.xml 
-            - chat/target/failsafe-reports/**/*.xml
+          files: |
+            studentsystem/target/failsafe-reports/**/*.xml
+            chat/target/failsafe-reports/**/*.xml
 
