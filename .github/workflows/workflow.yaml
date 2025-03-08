@@ -3,7 +3,7 @@ on:
     branches:
       - ci-cd
       - main
-      - postgresDB # Korrigierte Schreibweise (falls beabsichtigt)
+      - postgresDB
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -28,10 +28,16 @@ jobs:
         with:
           java-version: '21'
           distribution: 'adopt'
+      - name: Clean Maven Cache
+        run: |
+          rm -rf ~/.m2/repository
+      - name: Test Network Connection
+        run: |
+          ping -c 3 google.com
       - name: Maven Test
         run: |
           cd studentsystem
-          mvn test
+          mvn test -Dmaven.repo.local=~/.m2/repository
   integration-test:
     runs-on: ubuntu-latest
     needs: [test]
@@ -80,7 +86,7 @@ jobs:
           docker push ghcr.io/${{ github.repository }}/chat-image:latest
   deploy:
     runs-on: ubuntu-latest
-    needs: [build] # Korrekt hinzugefügt
+    needs: [build]
     steps:
       - name: Deploy Backend to Render
         uses: fjogeleit/http-request-action@master
