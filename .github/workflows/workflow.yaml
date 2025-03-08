@@ -64,6 +64,20 @@ jobs:
           docker push ghcr.io/ctygamer/studentensystem/frontend-image:latest
           docker tag chat-image ghcr.io/ctygamer/studentensystem/chat-image:latest
           docker push ghcr.io/ctygamer/studentensystem/chat-image:latest
+      #Verifizierungsschritte für Images.
+      - name: verify Backend Image
+        run: docker inspect ghcr.io/ctygamer/studentensystem/backend-image:latest
+      - name: verify Frontend Image
+        run: docker inspect ghcr.io/ctygamer/studentensystem/frontend-image:latest
+      - name: verify chat Image
+        run: docker inspect ghcr.io/ctygamer/studentensystem/chat-image:latest
+      #Verifizierungsschritte für Container.
+      - name: verify Backend Container
+        run: docker ps -a --filter "ancestor=ghcr.io/ctygamer/studentensystem/backend-image:latest"
+      - name: verify Frontend Container
+        run: docker ps -a --filter "ancestor=ghcr.io/ctygamer/studentensystem/frontend-image:latest"
+      - name: verify chat Container
+        run: docker ps -a --filter "ancestor=ghcr.io/ctygamer/studentensystem/chat-image:latest"
 
   deploy:
     runs-on: ubuntu-latest
