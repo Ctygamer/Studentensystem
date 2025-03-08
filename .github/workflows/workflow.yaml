@@ -31,9 +31,6 @@ jobs:
       - name: Clean Maven Cache
         run: |
           rm -rf ~/.m2/repository
-      - name: Test Network Connection
-        run: |
-          ping -c 3 google.com
       - name: Maven Test
         run: |
           cd studentsystem
