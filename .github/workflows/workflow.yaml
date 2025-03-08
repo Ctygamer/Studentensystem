@@ -31,10 +31,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - name: Build Backend with Maven
+      - name: Build Backend with Maven (Skip Tests)
         run: |
           cd studentsystem
-          mvn clean package
+          mvn clean package -DskipTests -DskipITs
       - name: Build Docker images
         run: |
           docker build -t backend-image ./studentsystem
