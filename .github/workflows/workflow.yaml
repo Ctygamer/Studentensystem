@@ -4,8 +4,7 @@ on:
       - ci-cd
       - main
       - postgresDB  # Korrigierte Schreibweise (falls beabsichtigt)
-
-
+      
  jobs:
   lint:
     runs-on: ubuntu-latest
