@@ -19,6 +19,12 @@ jobs:
         run: |
           cd studentfrontend
           npm run lint
+      # Füge hier einen ESLint-Schritt hinzu, um Frontend-Code zu überprüfen
+      # Beispiel:
+      # - name: Run ESLint
+      #   run: |
+      #     cd studentfrontend
+      #     npm run eslint
 
   build:
     runs-on: ubuntu-latest
@@ -34,6 +40,10 @@ jobs:
       - name: Build Backend with Maven (Skip Tests)
         run: |
           cd studentsystem
+          mvn clean package -DskipTests -DskipITs
+      - name: Build Chat with Maven (Skip Tests)
+        run: |
+          cd chat
           mvn clean package -DskipTests -DskipITs
       - name: Build Docker images
         run: |
