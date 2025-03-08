@@ -329,6 +329,10 @@ Die Pipeline besteht aus den folgenden Jobs:
 4.  **GitHub Actions-Status überprüfen.**
 5.  **Pull Request von `ci-cd` nach `main`, `develop` oder `staging` erstellen.**
 6.  **Pull Request mergen.**
+7.  Gelungene Verbindungen sind diese in der CI-CD Pipeline.
+   
+![grafik](https://github.com/user-attachments/assets/c05e3a28-717d-458e-9f04-1bf29354329e)
+
 
 ## Container Docker
 
