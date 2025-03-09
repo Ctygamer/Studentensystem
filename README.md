@@ -66,11 +66,8 @@ Für die lokale Entwicklung sind folgende Schritte notwendig:
 
 6. Installieren der Abhängigkeiten:
     ```bash
-    npm i
+    ./mvnw clean package -DskipTest
     ```
-
-npm i anstelle von npm install verwendet.
-
 
 7.  Zum Projektverzeichnis Frontend navigieren:
     ```bash
@@ -89,14 +86,8 @@ npm i anstelle von npm install verwendet.
 
 10. Installieren der Abhängigkeiten:
     ```bash
-    npm i
+    ./mvnw clean package -DskipTest
     ```
-
-10. Starte die Applikation:
-    ```bash
-    npm run
-    ```
-
 
 **Passe deine Befehle entsprechend deiner IDE an.
 
