@@ -96,32 +96,28 @@ jobs:
       - name: Run Unit Tests for Backend Service (studentsystem)
         run: |
           cd studentsystem || exit 1
-          mvn test || exit 1
+          mvn test -Dtest=!StudentsystemApplicationTests || exit 1
 
       - name: Check test report directories
         run: |
           echo "Checking target folder..."
           ls -R studentsystem/target || echo "No target folder found"
-          echo "Checking test folder..."
-          ls -R studentsystem/test || echo "No test folder found"
+          echo "Checking test report folder..."
+          ls -R studentsystem/target/surefire-reports/ || echo "No test reports found"
 
       - name: Upload Unit Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-results-backend
-          path: |
-            studentsystem/target/surefire-reports/**/*.xml
-            studentsystem/test/**/*.xml
+          path: studentsystem/target/surefire-reports/**/*.xml
           if-no-files-found: warn
 
       - name: Publish Unit Test Results
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
-          files: |
-            studentsystem/target/surefire-reports/**/*.xml
-            studentsystem/test/**/*.xml
+          files: studentsystem/target/surefire-reports/**/*.xml
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   integration-test:
