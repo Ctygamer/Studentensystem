@@ -98,23 +98,30 @@ jobs:
           cd studentsystem || exit 1
           mvn test || exit 1
 
-      - name: List test report directory
+      - name: Check test report directories
         run: |
-          cd studentsystem/target
-          ls -R
+          echo "Checking target folder..."
+          ls -R studentsystem/target || echo "No target folder found"
+          echo "Checking test folder..."
+          ls -R studentsystem/test || echo "No test folder found"
 
-      - name: Upload Unit Test Results for Backend Service
+      - name: Upload Unit Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-results-backend
-          path: studentsystem/target/surefire-reports/**/*.xml
+          path: |
+            studentsystem/target/surefire-reports/**/*.xml
+            studentsystem/test/**/*.xml
+          if-no-files-found: warn
 
-      - name: Publish Unit Test Results for Backend Service
+      - name: Publish Unit Test Results
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
-          files: studentsystem/target/surefire-reports/**/*.xml
+          files: |
+            studentsystem/target/surefire-reports/**/*.xml
+            studentsystem/test/**/*.xml
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   integration-test:
@@ -135,19 +142,19 @@ jobs:
           cd studentsystem || exit 1 
           mvn verify -Dtest=*IT -Dsurefire.failIfNoSpecifiedTests=false || exit 1
 
-      - name: List test report directory
+      - name: Check test report directory
         run: |
           cd studentsystem/target
           ls -R
 
-      - name: Upload Test Results for Backend Service
+      - name: Upload Integration Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: integration-test-results-backend
           path: studentsystem/target/surefire-reports/**/*.xml
 
-      - name: Publish Test Results for Backend Service
+      - name: Publish Integration Test Results
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2.5.0
         with:
