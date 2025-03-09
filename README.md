@@ -322,7 +322,7 @@ Die Pipeline besteht aus den folgenden Jobs:
 6.  **Pull Request mergen.**
 7.  Gelungene Verbindungen sind diese in der CI-CD Pipeline.
    
-![grafik](https://github.com/user-attachments/assets/c05e3a28-717d-458e-9f04-1bf29354329e)
+![image](https://github.com/user-attachments/assets/6890dc09-e133-4ab0-9cca-a8cc50a76249)
 
 
 ## Container Docker
@@ -545,9 +545,9 @@ Das Dockerfile ist eine Textdatei, die Anweisungen zum Erstellen eines Docker-Im
 Welche alle in der Applikation enthaten sind.
 # Tasks
 *Wir haben JIRA mit unserem Repository verbunden und die Tasks erstellt als Epics.
+https://caneryilmaz99-1741430360430.atlassian.net/jira/software/projects/SM7/boards/1/timeline
 
-
-![grafik](https://github.com/user-attachments/assets/6374c2b4-528f-4583-8203-59ab2549ad40)
+![image](https://github.com/user-attachments/assets/a0c2eb2e-fc49-4760-94ad-98443ab65404)
 
 
 # Authentication 
