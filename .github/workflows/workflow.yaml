@@ -80,6 +80,43 @@ jobs:
           push: true
           tags: ghcr.io/ctygamer/studentensystem/chat-image:latest
 
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21 for Tests
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run Unit Tests for Backend Service (studentsystem)
+        run: |
+          cd studentsystem || exit 1
+          mvn test || exit 1
+
+      - name: List test report directory
+        run: |
+          cd studentsystem/target
+          ls -R
+
+      - name: Upload Unit Test Results for Backend Service
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-results-backend
+          path: studentsystem/target/surefire-reports/**/*.xml
+
+      - name: Publish Unit Test Results for Backend Service
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2.5.0
+        with:
+          files: studentsystem/target/surefire-reports/**/*.xml
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
   integration-test:
     runs-on: ubuntu-latest
     needs: [build]
